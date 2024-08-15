@@ -25,7 +25,6 @@ const Matriz = (props) => {
       }
       newMatrix.push(row);
     }
-    console.log(newMatrix);
     setMatrix(newMatrix); 
   }, [lenghtX, lenghtY]);
 
@@ -37,7 +36,6 @@ const Matriz = (props) => {
     const column = parseInt(e.target.dataset.column, 10);
     const value = e.target.value;
 
-    console.log(row, column, value);
 
     // Actualizar la matriz con el nuevo valor
     setMatrix((prevMatrix) =>
@@ -45,8 +43,6 @@ const Matriz = (props) => {
         rowArr.map((cell, j) => (i === row && j === column ? value : cell))
       )
     );
-    console.log(matrix);
-    console.log(dimensions.columns);
   };
 
   // Efecto para devolver la matriz al componente padre cuando cambia
@@ -69,6 +65,9 @@ const Matriz = (props) => {
               data-column={j}
               value={matrix[i] ? matrix[i][j] : ""} // Verificar si `matrix[i]` está definido
               onChange={handleInputChange}
+              style={{
+                width: dimensions.columns > "7" ? "35px" : "50px",
+              }}
             />
           </td>
         );

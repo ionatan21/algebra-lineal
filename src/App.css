@@ -12,6 +12,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.4s;
+}
+
+.title{
+  transition: 1s;
 }
 
 @media (max-width: 500px) {
@@ -52,12 +57,19 @@ body {
   align-items: center;
   margin-inline: 20px;
 }
+
 .calculatate-button {
   background-color: black;
   color: white;
   border: none;
+  border-radius: 20px;
   transition: all 0.3s;
   margin-top: 30px;
+}
+
+.calculatate-button:disabled{
+  opacity: 0.6;
+  background-color: red;
 }
 
 .option-selected {
@@ -89,4 +101,10 @@ body {
     background-color: white;
     border: 1px solid gray;
   }
+}
+
+
+.footer{
+  margin: 30px;
+  bottom: 0;
 }

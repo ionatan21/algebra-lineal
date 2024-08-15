@@ -2,7 +2,7 @@ import React from "react";
 import './matriz.css'
 const ResultadoMatriz = ({ resultado }) => {
   if (!resultado || resultado.length === 0) {
-    return <div className="no-result animate-fade-in-up">No hay resultado para mostrar</div>;
+    return <div className="no-result animate-fade-in-up"></div>;
   }
   return (
     <div className="result-container animate-zoom-in">

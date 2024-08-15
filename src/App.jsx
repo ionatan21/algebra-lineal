@@ -14,6 +14,7 @@ function App() {
   const [matrixDataA, setMatrixDataA] = useState([]);
   const [matrixDataB, setMatrixDataB] = useState([]);
   const [resultado, setResultado] = useState([]);
+  const [state, setState] = useState(false);
 
   // Callback para recibir la matriz del componente hijo
   const handleMatrixAChange = (updatedMatrix) => {
@@ -24,8 +25,37 @@ function App() {
     setMatrixDataB(updatedMatrix);
   };
 
+  useEffect(() => {
+    let allFilled = true;
+
+    // Verificar matrixDataA
+    for (let i = 0; i < matrixDataA.length; i++) {
+      for (let j = 0; j < matrixDataA[0].length; j++) {
+        if (matrixDataA[i][j].length === 0) {
+          allFilled = false;
+          break;
+        }
+      }
+      if (!allFilled) break;
+    }
+
+    // Verificar matrixDataB
+    if (allFilled) {
+      for (let i = 0; i < matrixDataB.length; i++) {
+        for (let j = 0; j < matrixDataB[0].length; j++) {
+          if (matrixDataB[i][j].length === 0) {
+            allFilled = false;
+            break;
+          }
+        }
+        if (!allFilled) break;
+      }
+    }
+
+    setState(allFilled);
+  }, [matrixDataA, matrixDataB]);
+
   const handleCalculate = () => {
-    console.log(matrixDataA, matrixDataB);
     const resultado = operarMatrices(matrixDataA, matrixDataB, option);
     setResultado(resultado);
   };
@@ -40,7 +70,7 @@ function App() {
 
   return (
     <div className="font-sans">
-      <h1 className="animate-fade-in-down">Álgebra de Matrices</h1>
+      <h1 className="animate-fade-in-down mt-3 title">Álgebra de Matrices</h1>
 
       <section className="user-options animate-fade-in-down">
         <select
@@ -75,12 +105,17 @@ function App() {
             <option value="2">2x2</option>
             <option value="3">3x3</option>
             <option value="4">4x4</option>
+            <option value="5">5x5</option>
+            <option value="6">6x6</option>
+            <option value="7">7x7</option>
+            <option value="8">8x8</option>
+            <option value="9">9x9</option>
           </select>
         )}
       </section>
       {option === "*" && (
         <section className="dimensions-container mb-3">
-          <div className="flex flex-col">
+          <div className="flex flex-col animate-fade-in-up">
             <h2>Dimensión matriz A</h2>
             <Dimensions
               changex={(e) => setx(e.target.value)}
@@ -88,7 +123,7 @@ function App() {
             />
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col animate-fade-in-up">
             <h2>Dimensión matriz B</h2>
             <Dimensions
               y={y}
@@ -121,11 +156,16 @@ function App() {
       <button
         className="calculatate-button animate-fade-in-up"
         onClick={handleCalculate}
+        disabled={!state}
       >
         Calcular resultado
       </button>
 
       <ResultadoMatriz resultado={resultado} />
+
+      <footer className="footer animate-blurred-fade-in">
+        <strong className="text-black">Hecho por Jonatan {state}</strong>
+      </footer>
     </div>
   );
 }
