@@ -1,0 +1,17 @@
+.Handlebutton {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s;
+    margin-top: 30px;
+  }
+
+  .Handlebutton:hover {
+    scale: 1.03;
+  }
+
+  .Handlebutton:disabled{
+    opacity: 0.6;
+    background-color: red;
+  }

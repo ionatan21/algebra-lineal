@@ -2,19 +2,31 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Matriz from "./components/matriz";
 import Dimensions from "./components/dimensions";
-import { operarMatrices } from "./Logic/functions";
+import { operarMatrices, verificarMatrices } from "./Logic/functions";
 import ResultadoMatriz from "./components/ResultadoMatriz";
+import InputVar from "./components/InputVar";
+import Suma from "./components/suma";
+import Resta from "./components/resta";
+import Multiplicacion from "./components/multiplicacion";
+import Transpuesta from "./components/transpuesta";
+import ProductoK from "./components/ProductoK";
+import Options from "./components/options";
+import Handlebutton from "./components/handlebutton";
+import Adjunta from "./components/Adjunta";
+import Determinante from "./components/Determinante";
 
 function App() {
   const [dimension, setDimension] = useState(0);
   const [x, setx] = useState(0);
   const [y, sety] = useState(0);
   const [z, setz] = useState(0);
+  const [k, setk] = useState(0);
   const [option, setOption] = useState("");
   const [matrixDataA, setMatrixDataA] = useState([]);
   const [matrixDataB, setMatrixDataB] = useState([]);
   const [resultado, setResultado] = useState([]);
-  const [state, setState] = useState(false);
+  const [resultadoNum, setresultadoNum] = useState(0);
+  const [state, setState] = useState(true);
 
   // Callback para recibir la matriz del componente hijo
   const handleMatrixAChange = (updatedMatrix) => {
@@ -28,36 +40,32 @@ function App() {
   useEffect(() => {
     let allFilled = true;
 
-    // Verificar matrixDataA
-    for (let i = 0; i < matrixDataA.length; i++) {
-      for (let j = 0; j < matrixDataA[0].length; j++) {
-        if (matrixDataA[i][j].length === 0) {
-          allFilled = false;
-          break;
-        }
-      }
-      if (!allFilled) break;
+    let matriz1Filled = verificarMatrices(matrixDataA);
+    let matriz2Filled = verificarMatrices(matrixDataB);
+
+    if (
+      option === "k" ||
+      option === "T" ||
+      option === "Adj" ||
+      option === "Det"
+    ) {
+      matriz2Filled = true;
     }
 
-    // Verificar matrixDataB
-    if (allFilled) {
-      for (let i = 0; i < matrixDataB.length; i++) {
-        for (let j = 0; j < matrixDataB[0].length; j++) {
-          if (matrixDataB[i][j].length === 0) {
-            allFilled = false;
-            break;
-          }
-        }
-        if (!allFilled) break;
-      }
+    if (matriz1Filled && matriz2Filled) {
+      allFilled = false;
     }
 
     setState(allFilled);
   }, [matrixDataA, matrixDataB]);
 
   const handleCalculate = () => {
-    const resultado = operarMatrices(matrixDataA, matrixDataB, option);
-    setResultado(resultado);
+    const resultado = operarMatrices(matrixDataA, matrixDataB, option, k);
+    if (option === "Det") {
+      setresultadoNum(resultado);
+    } else {
+      setResultado(resultado);
+    }
   };
 
   let dimensionsA = { rows: dimension, columns: dimension };
@@ -73,19 +81,7 @@ function App() {
       <h1 className="animate-fade-in-down mt-3 title">Álgebra de Matrices</h1>
 
       <section className="user-options animate-fade-in-down">
-        <select
-          name="options"
-          id="options"
-          onChange={(e) => setOption(e.target.value)}
-        >
-          <option value="" disabled selected>
-            Seleccione una opción
-          </option>
-          <option value="+">Suma</option>
-          <option value="-">Resta</option>
-          <option value="*">Multiplicación</option>
-          <option value="T">Transpuesta</option>
-        </select>
+        <Options setOption={setOption} setState={setState} />
 
         {option != "*" && (
           <select
@@ -93,7 +89,8 @@ function App() {
               setDimension(
                 parseInt(e.target.value),
                 setMatrixDataA([]),
-                setMatrixDataB([])
+                setMatrixDataB([]),
+                setState(true)
               )
             }
             name="dimension"
@@ -113,55 +110,87 @@ function App() {
           </select>
         )}
       </section>
-      {option === "*" && (
-        <section className="dimensions-container mb-3">
-          <div className="flex flex-col animate-fade-in-up">
-            <h2>Dimensión matriz A</h2>
-            <Dimensions
-              changex={(e) => setx(e.target.value)}
-              changey={(e) => sety(e.target.value)}
-            />
-          </div>
 
-          <div className="flex flex-col animate-fade-in-up">
-            <h2>Dimensión matriz B</h2>
-            <Dimensions
-              y={y}
-              disabled={true}
-              changez={(e) => setz(e.target.value)}
-            />
-          </div>
-        </section>
-      )}
-      <section className="matrices animate-fade-in">
-        <Matriz
-          dimensions={dimensionsA}
-          onMatrixChange={handleMatrixAChange}
-          var={"A"}
-        />
-        {option != "T" && (
-          <div className="option-container">
-            <h1 className="option-selected animate-fade-in">{option}</h1>
-          </div>
-        )}
-        {option != "T" && (
-          <Matriz
-            dimensions={dimensionsB}
-            onMatrixChange={handleMatrixBChange}
-            var={"B"}
+      {option === "*" && (
+        <div>
+          <section className="dimensions-container mb-3">
+            <div className="flex flex-col animate-fade-in-up">
+              <h2>Dimensión matriz A</h2>
+              <Dimensions
+                changex={(e) => setx(e.target.value)}
+                changey={(e) => sety(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col animate-fade-in-up">
+              <h2>Dimensión matriz B</h2>
+              <Dimensions
+                y={y}
+                disabled={true}
+                changez={(e) => setz(e.target.value)}
+              />
+            </div>
+          </section>
+
+          <Multiplicacion
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+            dimensionsB={dimensionsB}
+            handleMatrixBChange={handleMatrixBChange}
           />
+        </div>
+      )}
+
+      <section className="matrices animate-fade-in">
+        {option === "+" ? (
+          <Suma
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+            dimensionsB={dimensionsB}
+            handleMatrixBChange={handleMatrixBChange}
+          />
+        ) : option === "-" ? (
+          <Resta
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+            dimensionsB={dimensionsB}
+            handleMatrixBChange={handleMatrixBChange}
+          />
+        ) : option === "T" ? (
+          <Transpuesta
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+          />
+        ) : option === "k" ? (
+          <ProductoK
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+            setk={setk}
+          />
+        ) : option === "Adj" ? (
+          <Adjunta
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+          />
+        ) : option === "Det" ? (
+          <Determinante
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+          />
+        ) : (
+          <></>
         )}
       </section>
 
-      <button
-        className="calculatate-button animate-fade-in-up"
-        onClick={handleCalculate}
-        disabled={!state}
-      >
-        Calcular resultado
-      </button>
+      <Handlebutton
+        handle={handleCalculate}
+        content={"Calcular resultado"}
+        state={state}
+      />
 
       <ResultadoMatriz resultado={resultado} />
+
+      {option === "Det" && <h2>Resultado: {resultadoNum}</h2>}
 
       <footer className="footer animate-blurred-fade-in">
         <strong className="text-black">Hecho por Jonatan {state}</strong>

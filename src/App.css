@@ -58,26 +58,14 @@ body {
   margin-inline: 20px;
 }
 
-.calculatate-button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  transition: all 0.3s;
-  margin-top: 30px;
-}
 
-.calculatate-button:disabled{
-  opacity: 0.6;
-  background-color: red;
-}
+
+
 
 .option-selected {
   color: #000;
 }
-.calculatate-button:hover {
-  scale: 1.03;
-}
+
 
 .user-options {
   display: flex;
