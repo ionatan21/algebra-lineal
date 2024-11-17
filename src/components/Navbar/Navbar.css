@@ -79,7 +79,7 @@
   }
 
   .calc-icon {
-    background-image: url("/public/calculator-solid.svg");
+    background-image: var(--calc-logo);
     background-repeat: no-repeat;
     background-position: center;
     background-color: brown;
@@ -91,7 +91,7 @@
   }
 
   .prop-icon {
-    background-image: url("/public/circle-info-solid.svg");
+    background-image: var(--info-logo);
     background-repeat: no-repeat;
     background-position: center;
     background-color: brown;
@@ -103,7 +103,7 @@
   }
 
   .ejemp-icon {
-    background-image: url("/public/list-solid.svg");
+    background-image: var(--ejemp-logo);
     background-repeat: no-repeat;
     background-position: center;
     background-color: brown;
