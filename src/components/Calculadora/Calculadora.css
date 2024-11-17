@@ -40,6 +40,10 @@
   }
 }
 
+.calc-container{
+  scroll-behavior: smooth;
+}
+
 .dimensions-container {
   display: flex;
   justify-content: space-evenly;

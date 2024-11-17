@@ -117,7 +117,7 @@ function CalculadoraMatriz() {
   }
 
   return (
-    <div className="font-sans bg-transparen mt-24">
+    <div className="calc-container font-sans bg-transparen mt-24">
       <h1 className="animate-fade-in-down mt-3 title">Álgebra de Matrices</h1>
 
       <section className="user-options animate-fade-in-down">
@@ -175,6 +175,13 @@ function CalculadoraMatriz() {
               />
             </div>
           </section>
+
+          <Multiplicacion
+            dimensionsA={dimensionsA}
+            handleMatrixAChange={handleMatrixAChange}
+            dimensionsB={dimensionsB}
+            handleMatrixBChange={handleMatrixBChange}
+          />
 
           <Multiplicacion
             dimensionsA={dimensionsA}

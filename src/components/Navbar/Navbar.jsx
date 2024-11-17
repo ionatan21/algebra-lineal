@@ -46,6 +46,12 @@ const Navbar = () => {
           <Link to="/propiedades">Propiedades</Link>
           <Link to="/ejemplos">Ejemplos</Link>
         </div>
+
+        <div className="optionsMobile">
+          <Link to="/" className="calc-icon"></Link>
+          <Link to="/propiedades" className="prop-icon"></Link>
+          <Link to="/ejemplos" className="ejemp-icon"></Link>
+        </div>
         <Theme toggleTheme={toggleTheme} theme={theme} />
       </nav>
     </section>
