@@ -1,5 +1,5 @@
 import React from 'react';
-import "./ejemplos.css"
+import "./Ejemplos.css"
 const Ejemplos = () => {
     return (
         <div className='ejemplos animate-fade-in-down'>
