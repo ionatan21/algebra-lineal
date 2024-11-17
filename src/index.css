@@ -13,6 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html{
+  scroll-behavior: smooth;
+  overflow-x: hidden
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,6 +38,75 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+
+
+/* Tema claro */
+body.light-theme {
+  background-color: white;
+  color: black;
+}
+
+body.light-theme input,
+body.light-theme select,
+body.light-theme h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: black;
+}
+
+body.light-theme h3, strong{
+  color: black;
+}
+
+body.light-theme a{
+  color: rgb(0, 0, 0);
+}
+
+body.light-theme .Handlebutton{
+  color: rgb(255, 255, 255);
+}
+
+body.dark-theme .Handlebutton{
+  color: rgb(255, 255, 255);
+  background-color: blue;
+}
+
+body.dark-theme .Handlebutton:disabled{
+  opacity: 0.6;
+  background-color: red;
+}
+/* Tema oscuro */
+body.dark-theme {
+  background-color: black;
+  color: white;
+}
+
+body.dark-theme input,
+body.dark-theme button,
+body.dark-theme select,
+body.dark-theme td {
+  color: white;
+  background-color: #333; /* Fondo oscuro para inputs y botones */
+  border: 1px solid #555;
+}
+
+body.dark-theme h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(255, 255, 255);
+}
+
+body.dark-theme strong, a{
+  color: white; 
+}
+
 
 h1 {
   font-size: 3.2em;
@@ -68,5 +142,18 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #ffffff;
+    background-color: #000000;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #ffffff;
   }
 }

@@ -45,12 +45,10 @@ const Matriz = (props) => {
     );
   };
 
-  // Efecto para devolver la matriz al componente padre cuando cambia
   useEffect(() => {
     onMatrixChange(matrix);
   }, [matrix, onMatrixChange]);
 
-  // Renderizar la matriz
   const renderMatrix = () => {
     const rows = [];
     for (let i = 0; i < dimensions.rows; i++) {
@@ -63,7 +61,7 @@ const Matriz = (props) => {
               name={`cell-${i}-${j}`}
               data-row={i}
               data-column={j}
-              value={matrix[i] ? matrix[i][j] : ""} // Verificar si `matrix[i]` está definido
+              value={matrix[i] ? matrix[i][j] : ""}
               onChange={handleInputChange}
               style={{
                 width: dimensions.columns > "7" ? "35px" : "50px",

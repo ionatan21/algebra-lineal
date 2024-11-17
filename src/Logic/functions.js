@@ -50,11 +50,19 @@ const determinante2x2 = (matriz) => {
 
 // Función para calcular el determinante de una matriz n x n
 const determinante = (matriz) => {
+
+  if (matriz.length === 1) {
+    return matriz[0][0];
+  }
+
+
   if (matriz.length === 2) {
     return determinante2x2(matriz);
   }
 
   let det = 0;
+  console.log(matriz.length);
+  
   for (let i = 0; i < matriz[0].length; i++) {
     const subMatriz = matriz
       .slice(1)
@@ -67,6 +75,7 @@ const determinante = (matriz) => {
 // Función para obtener la matriz de cofactores
 const cofactores = (matriz) => {
   return matriz.map((row, i) =>
+    
     row.map((_, j) => {
       const subMatriz = matriz
         .filter((_, rowIndex) => rowIndex !== i)
@@ -80,6 +89,7 @@ const cofactores = (matriz) => {
 
 // Función para calcular la adjunta de una matriz
 const adjuntaMatriz = (matriz) => {
+  
   const matrizCofactores = cofactores(matriz);
   return transponerMatriz(matrizCofactores);
 };
@@ -128,4 +138,48 @@ const verificarMatrices = (matriz) => {
   return allFilled;
 };
 
-export { operarMatrices, verificarMatrices };
+const inversaMatriz = (matriz, determinanteMatriz) => {
+  // Calcular la adjunta de la matriz
+  const matrizAdjunta = adjuntaMatriz(matriz);
+
+  // Dividir cada elemento de la adjunta por el determinante
+  const matrizInversa = matrizAdjunta.map(row =>
+    row.map(value => convertirEnFraccion(value, determinanteMatriz))
+  );
+
+  return matrizInversa;
+};
+
+
+// Convertir valor a fracción
+const convertirEnFraccion = (numerador, denominador) => {
+  // Asegurar que ambos valores sean enteros (multiplicar por un factor si es necesario)
+  const precision = 1e9; // Ajustar precisión para evitar errores flotantes
+  let num = Math.round(numerador * precision);
+  let den = Math.round(denominador * precision);
+
+  // Calcular el MCD usando el algoritmo de Euclides
+  const mcd = calcularMCD(num, den);
+
+  // Simplificar numerador y denominador
+  num = num / mcd;
+  den = den / mcd;
+
+  // Asegurar que el denominador sea positivo
+  if (den < 0) {
+    num = -num;
+    den = -den;
+  }
+
+  return `${num}/${den}`;
+};
+
+
+const calcularMCD = (a, b) => {
+  while (b !== 0) {
+    [a, b] = [b, a % b];
+  }
+  return Math.abs(a);
+};
+
+export { operarMatrices, verificarMatrices, determinante, inversaMatriz };
