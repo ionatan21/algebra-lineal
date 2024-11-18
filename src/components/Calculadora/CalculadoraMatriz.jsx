@@ -165,15 +165,16 @@ function CalculadoraMatriz() {
                 changey={(e) => sety(e.target.value)}
               />
             </div>
-            
-          </section>
 
-          <Multiplicacion
-            dimensionsA={dimensionsA}
-            handleMatrixAChange={handleMatrixAChange}
-            dimensionsB={dimensionsB}
-            handleMatrixBChange={handleMatrixBChange}
-          />
+            <div className="flex flex-col animate-fade-in-up">
+              <h2>Dimensión matriz B</h2>
+              <Dimensions
+                y={y}
+                disabled={true}
+                changez={(e) => setz(e.target.value)}
+              />
+            </div>
+          </section>
 
           <Multiplicacion
             dimensionsA={dimensionsA}
