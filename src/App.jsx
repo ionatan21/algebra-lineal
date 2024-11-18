@@ -5,6 +5,7 @@ import Ejemplos from "./components/Ejemplos/Ejemplos";
 import Navbar from "./components/Navbar/Navbar";
 import Propiedades from "./components/Propiedades/Propiedades";
 
+
 function App() {
   return (
     <Router>
