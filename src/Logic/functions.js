@@ -153,6 +153,11 @@ const inversaMatriz = (matriz, determinanteMatriz) => {
 
 // Convertir valor a fracción
 const convertirEnFraccion = (numerador, denominador) => {
+  // Si el numerador es 0, retornar "0"
+  if (numerador === 0) {
+    return "0";
+  }
+
   // Asegurar que ambos valores sean enteros (multiplicar por un factor si es necesario)
   const precision = 1e9; // Ajustar precisión para evitar errores flotantes
   let num = Math.round(numerador * precision);
@@ -174,12 +179,12 @@ const convertirEnFraccion = (numerador, denominador) => {
   return `${num}/${den}`;
 };
 
-
 const calcularMCD = (a, b) => {
   while (b !== 0) {
     [a, b] = [b, a % b];
   }
   return Math.abs(a);
 };
+
 
 export { operarMatrices, verificarMatrices, determinante, inversaMatriz };
